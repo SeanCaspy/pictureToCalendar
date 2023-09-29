@@ -7,6 +7,15 @@ from Person import Person
 from Shift import Shift
 
 
+def shift_to_link(d_day, d_month, d_year, d_start_time, d_end_time):
+    start = datetime.datetime(d_year, d_month, d_day, d_start_time, 0)
+    end = datetime.datetime(d_year, d_month, d_day, d_end_time, 0)
+    url = "https://calendar.google.com/calendar/event?action=TEMPLATE"
+    url += "&text=" + "Event"
+    url += "&dates=" + start.strftime("%Y%m%dT%H%M%SZ") + "/" + end.strftime("%Y%m%dT%H%M%SZ")
+    return url
+
+
 def divide_to_sub_pic(from_img):
     start_height = 167
     end_height = 200
@@ -100,7 +109,6 @@ def find_worker(employee_name):
 
 def index_to_date(t_person, t_day, t_shift, long_shift):
     today = datetime.date.today()
-    week_day = today.weekday()
     if t_day != 6:
         days_until_shift = (7 - t_day) + today.weekday()
         date = today + datetime.timedelta(days=days_until_shift)
@@ -124,6 +132,7 @@ def index_to_date(t_person, t_day, t_shift, long_shift):
         print(
             f"shift of {shift_info.day}/{shift_info.month}/{shift_info.year} between {shift_info.start_time} to "
             f"{shift_info.end_time}")
+        print(shift_to_link(shift_info.day, shift_info.month, shift_info.year, shift_info.start_time, shift_info.end_time))
 
 
 if __name__ == '__main__':
